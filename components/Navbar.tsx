@@ -31,12 +31,14 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
     const element = document.querySelector(path);
     if (element) {
-      const headerOffset = 70;
+      // Offset of 55px ensures content tucks slightly under the navbar (approx 57px-65px height)
+      // preventing any gaps showing the background of the previous section.
+      const headerOffset = 55;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
-        top: offsetPosition,
+        top: offsetPosition >= 0 ? offsetPosition : 0,
         behavior: "smooth"
       });
       setActiveSection(path);

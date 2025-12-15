@@ -21,9 +21,6 @@ export interface StatItem {
 
 export interface ProjectItem {
   id: number;
-  title: string;
-  category: string;
-  location: string;
   image: string;
 }
 

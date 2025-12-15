@@ -13,8 +13,8 @@ const About: React.FC<AboutProps> = ({ id }) => {
       opacity: 1, 
       y: 0, 
       transition: { 
-        duration: 0.6, 
-        ease: "easeOut" 
+        duration: 0.8, 
+        ease: [0.22, 1, 0.36, 1]
       } 
     }
   };
@@ -37,7 +37,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
         >
           <h2 className="text-lg font-bold text-accent tracking-widest uppercase mb-2">من نحن</h2>
@@ -77,18 +77,20 @@ const About: React.FC<AboutProps> = ({ id }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
+                whileHover={{ scale: 1.03 }}
                 src="https://i.pinimg.com/1200x/53/55/14/535514e21cb9a6ca8908977b561b83be.jpg" 
                 alt="Office interior" 
-                className="w-full h-full object-cover rounded-sm shadow-md mt-8 hover:scale-105 transition-transform duration-500" 
+                className="w-full h-full object-cover rounded-sm shadow-md mt-8 transition-transform duration-500" 
               />
               <motion.img 
                 initial={{ opacity: 0, y: -50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
+                whileHover={{ scale: 1.03 }}
                 src="https://i.pinimg.com/1200x/ab/0e/97/ab0e970f060c7f974d5d457f63739c29.jpg" 
                 alt="Meeting room" 
-                className="w-full h-full object-cover rounded-sm shadow-md mb-8 hover:scale-105 transition-transform duration-500" 
+                className="w-full h-full object-cover rounded-sm shadow-md mb-8 transition-transform duration-500" 
               />
             </div>
           </div>
@@ -128,9 +130,13 @@ const About: React.FC<AboutProps> = ({ id }) => {
               <motion.div 
                 key={idx}
                 variants={fadeInUp}
-                className={`bg-white p-8 rounded-sm shadow-sm border-t-4 border-${item.color} hover:-translate-y-2 transition-transform duration-300`}
+                whileHover={{ 
+                  y: -12, 
+                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                }}
+                className={`bg-white p-8 rounded-sm shadow-sm border-t-4 border-${item.color} transition-all duration-300 cursor-default`}
               >
-                <div className="bg-neutral w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                <div className={`bg-neutral w-14 h-14 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                   <item.icon className={`text-${item.color} w-7 h-7`} />
                 </div>
                 <h3 className="text-xl font-bold text-primary mb-4">{item.title}</h3>

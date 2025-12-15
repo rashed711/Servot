@@ -3,7 +3,7 @@ import { Ruler, Hammer, PaintBucket, Briefcase, Armchair } from 'lucide-react';
 
 export const COMPANY_NAME = "سيرفوت";
 export const COMPANY_NAME_EN = "SERVOT";
-export const LOGO_URL = "https://www2.0zz0.com/2025/12/15/07/473471782.png";
+export const LOGO_URL = "https://i.postimg.cc/hPgCvV8y/Servot.webp";
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'الرئيسية', path: '#home' },
@@ -100,23 +100,14 @@ export const STATS: StatItem[] = [
 export const PROJECTS: ProjectItem[] = [
   {
     id: 1,
-    title: 'فيلا سكنية خاصة',
-    category: 'تصميم داخلي',
-    location: 'التجمع الخامس',
-    image: 'https://capitalegy.com/wp-content/uploads/2019/11/5ca5df6346e2f600887454-500x328.jpg'
+    image: 'https://i.postimg.cc/wj0zB6Sn/003.webp'
   },
   {
     id: 2,
-    title: 'مجمع مكاتب إدارية',
-    category: 'تشطيبات وتجهيز',
-    location: 'الرحاب',
-    image: 'https://www.fineline-eg.net/wp-content/uploads/2014/03/labimg_300_268_1_al-rehab-.png'
+    image: 'https://i.postimg.cc/pLqvd2wb/002.webp'
   },
   {
     id: 3,
-    title: 'وحدة سكنية فاخرة',
-    category: 'أثاث وديكور',
-    location: 'العاصمة الإدارية',
-    image: 'https://i.pinimg.com/736x/dc/5c/5a/dc5c5a39a9388f52ecaf13cd22d4c8e9.jpg'
+    image: 'https://i.postimg.cc/HkBmLpqC/001-(2).webp'
   },
 ];

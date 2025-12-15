@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { STATS } from '../constants';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
@@ -8,18 +8,37 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ id }) => {
-  const { scrollY } = useScroll();
-  const yBg = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacityHero = useTransform(scrollY, [0, 400], [1, 0]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Hero Parallax & Fade
+  const yBg = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  // About Section Parallax (Reverse direction for depth)
+  // We need a separate useScroll for the section relative to viewport for the image parallax
+  const aboutRef = useRef(null);
+  const { scrollYProgress: aboutScrollY } = useScroll({
+    target: aboutRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const yAboutImg = useTransform(aboutScrollY, [0, 1], [50, -50]);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 55;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      window.scrollTo({ 
+        top: offsetPosition >= 0 ? offsetPosition : 0, 
+        behavior: "smooth" 
+      });
     }
   };
 
@@ -33,16 +52,20 @@ const Home: React.FC<HomeProps> = ({ id }) => {
   };
 
   return (
-    <div id={id} className="w-full overflow-hidden">
+    <div id={id} ref={containerRef} className="w-full overflow-hidden">
       {/* Hero Section */}
       <section className="relative h-[100dvh] min-h-[550px] flex items-center justify-center overflow-hidden">
+        {/* Background Image Container with Parallax and Scale Effect */}
         <motion.div style={{ y: yBg }} className="absolute inset-0 z-0">
-          <img 
+          <motion.img 
+            initial={{ scale: 1.15 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 2.5, ease: "easeOut" }}
             src="https://i.pinimg.com/1200x/6f/76/ad/6f76adf3395e2e94eb92fc7e6c6fad14.jpg" 
             alt="Interior Architecture" 
-            className="w-full h-full object-cover scale-110"
+            className="w-full h-full object-cover"
           />
-          {/* Gradient overlay specifically tuned for mobile text readability */}
+          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/70 to-primary/30 md:bg-gradient-to-r md:from-primary/90 md:via-primary/70 md:to-transparent"></div>
         </motion.div>
 
@@ -55,7 +78,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
             animate="visible"
             variants={{
               hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.3 } }
+              visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.5 } }
             }}
             className="max-w-3xl mx-auto md:mx-0"
           >
@@ -84,7 +107,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
               <a 
                 href="#contact"
                 onClick={(e) => scrollToSection(e, 'contact')}
-                className="w-full sm:w-auto px-8 py-3.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-base md:text-lg hover:bg-white hover:text-primary transition-all rounded-sm flex items-center justify-center"
+                className="w-full sm:w-auto px-8 py-3.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-base md:text-lg hover:bg-white hover:text-primary transition-all rounded-sm flex items-center justify-center hover:scale-[1.02]"
               >
                 تواصل معنا
               </a>
@@ -94,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
       </section>
 
       {/* Intro Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section ref={aboutRef} className="py-16 md:py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
@@ -121,30 +144,36 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                   <motion.li 
                     key={idx} 
                     variants={fadeInUp}
-                    className="flex items-start text-gray-700 text-sm md:text-base font-medium"
+                    className="flex items-start text-gray-700 text-sm md:text-base font-medium group"
                   >
-                    <div className="bg-neutral p-1 rounded-full ml-3 mt-0.5">
+                    <div className="bg-neutral p-1 rounded-full ml-3 mt-0.5 group-hover:bg-accent/10 transition-colors">
                       <CheckCircle2 className="text-accent w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
                     </div>
-                    <span>{item}</span>
+                    <span className="group-hover:text-primary transition-colors">{item}</span>
                   </motion.li>
                 ))}
               </motion.ul>
             </motion.div>
             
+            {/* Image with Reverse Parallax Effect */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              style={{ y: yAboutImg }}
               className="relative mt-4 lg:mt-0"
             >
-              <div className="absolute top-[-20px] left-[-20px] w-full h-full border-2 border-accent/20 z-0 hidden md:block rounded-sm"></div>
-              <img 
-                src="https://i.pinimg.com/1200x/6d/3d/eb/6d3deb788e8f135a0f11a34f413218de.jpg" 
-                alt="About Servot" 
-                className="relative z-10 w-full h-auto shadow-xl rounded-sm object-cover aspect-[4/3]"
-              />
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="relative z-10"
+              >
+                <div className="absolute top-[-20px] left-[-20px] w-full h-full border-2 border-accent/20 z-0 hidden md:block rounded-sm transition-transform duration-700 hover:translate-x-2 hover:translate-y-2"></div>
+                <img 
+                  src="https://i.pinimg.com/1200x/6d/3d/eb/6d3deb788e8f135a0f11a34f413218de.jpg" 
+                  alt="About Servot" 
+                  className="relative z-10 w-full h-auto shadow-2xl rounded-sm object-cover aspect-[4/3]"
+                />
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -167,7 +196,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                 key={idx} 
                 variants={{
                   hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } }
                 }}
                 className="pt-8 md:pt-0 px-4"
               >

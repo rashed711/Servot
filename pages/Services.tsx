@@ -12,10 +12,13 @@ const Services: React.FC<ServicesProps> = ({ id }) => {
     e.preventDefault();
     const element = document.getElementById('contact');
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 55;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      window.scrollTo({ 
+        top: offsetPosition >= 0 ? offsetPosition : 0, 
+        behavior: "smooth" 
+      });
     }
   }
 
