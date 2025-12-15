@@ -15,34 +15,31 @@ const Services: React.FC<ServicesProps> = ({ id }) => {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
   }
 
   return (
-    <div id={id} className="w-full overflow-hidden">
+    <div id={id} className="w-full overflow-hidden bg-neutral">
       {/* Header */}
-      <div className="bg-secondary py-24 text-white text-center relative">
+      <div className="bg-white py-14 md:py-24 text-center relative border-b border-gray-100">
         <motion.div 
-           initial={{ opacity: 0, scale: 0.9 }}
-           whileInView={{ opacity: 1, scale: 1 }}
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ duration: 0.7 }}
+           className="max-w-4xl mx-auto px-5"
         >
-          <h2 className="text-accent text-lg font-bold tracking-widest uppercase mb-2">خدماتنا</h2>
-          <h1 className="text-4xl font-bold mb-4">حلول هندسية متكاملة</h1>
-          <p className="text-gray-300 max-w-2xl mx-auto px-4">
+          <span className="text-accent text-xs md:text-sm font-bold tracking-widest uppercase mb-2 block">خدماتنا</span>
+          <h1 className="text-2xl md:text-5xl font-bold text-primary mb-3 md:mb-4">حلول هندسية متكاملة</h1>
+          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-lg leading-loose">
             نقدم مجموعة متناغمة من الخدمات الهندسية لتغطية كافة احتياجات مشروعك تحت سقف واحد وبإدارة موحدة.
           </p>
         </motion.div>
       </div>
 
       {/* Services List */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 md:py-24 space-y-16 md:space-y-32">
         {SERVICES.map((service, index) => {
           const isEven = index % 2 === 0;
           return (
@@ -50,56 +47,58 @@ const Services: React.FC<ServicesProps> = ({ id }) => {
               key={service.id} 
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               variants={{
-                hidden: { opacity: 0, x: 0 }, // Handled by children
-                visible: { opacity: 1, x: 0 }
+                hidden: { opacity: 0 },
+                visible: { opacity: 1 }
               }}
-              className={`flex flex-col md:flex-row gap-12 items-center ${!isEven ? 'md:flex-row-reverse' : ''}`}
+              className={`flex flex-col md:flex-row gap-6 md:gap-16 items-center ${!isEven ? 'md:flex-row-reverse' : ''}`}
             >
               
               {/* Image Side */}
               <motion.div 
                 variants={{
-                  hidden: { opacity: 0, x: isEven ? -50 : 50 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
                 }}
                 className="w-full md:w-1/2 relative group"
               >
-                <div className={`absolute top-4 ${!isEven ? 'right-4' : 'left-4'} w-full h-full border-2 border-accent z-0 transition-transform duration-500 group-hover:translate-x-3 group-hover:translate-y-3 hidden md:block`}></div>
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="relative z-10 w-full h-[400px] object-cover shadow-lg rounded-sm bg-gray-200 transition-transform duration-500 group-hover:scale-[1.01]"
-                />
+                <div className={`absolute top-4 ${!isEven ? 'right-4' : 'left-4'} w-full h-full border-2 border-accent/20 rounded-sm z-0 hidden md:block transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2`}></div>
+                <div className="overflow-hidden rounded-sm shadow-md">
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="relative z-10 w-full h-[220px] md:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
               </motion.div>
 
               {/* Content Side */}
               <motion.div 
                 variants={{
-                  hidden: { opacity: 0, x: isEven ? 50 : -50 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 0.2 } }
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } }
                 }}
                 className="w-full md:w-1/2"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-neutral rounded-lg">
-                    <service.icon className="w-8 h-8 text-accent" />
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <div className="p-2.5 md:p-3 bg-white shadow-sm rounded-lg border border-gray-100">
+                    <service.icon className="w-5 h-5 md:w-8 md:h-8 text-accent" />
                   </div>
-                  <h2 className="text-3xl font-bold text-primary">{service.title}</h2>
+                  <h2 className="text-xl md:text-4xl font-bold text-primary">{service.title}</h2>
                 </div>
                 
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 text-sm md:text-lg leading-loose mb-5 md:mb-8">
                   {service.description}
                 </p>
 
-                <div className="bg-neutral p-6 rounded-sm border-r-4 border-primary hover:bg-white hover:shadow-md transition-all duration-300">
-                  <h4 className="font-bold text-primary mb-4">نطاق العمل يشمل:</h4>
-                  <ul className="space-y-3">
+                <div className="bg-white p-5 md:p-6 rounded-sm border-r-4 border-accent shadow-sm hover:shadow-md transition-all duration-300">
+                  <h4 className="font-bold text-primary mb-3 text-base md:text-lg">نطاق العمل يشمل:</h4>
+                  <ul className="space-y-2.5 md:space-y-3">
                     {service.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start text-gray-700">
-                        <Check className="w-5 h-5 text-accent ml-3 mt-1 flex-shrink-0" />
+                      <li key={idx} className="flex items-start text-gray-700 text-sm md:text-base leading-relaxed">
+                        <Check className="w-4 h-4 md:w-5 md:h-5 text-accent ml-3 mt-0.5 flex-shrink-0" />
                         <span>{detail}</span>
                       </li>
                     ))}
@@ -114,21 +113,23 @@ const Services: React.FC<ServicesProps> = ({ id }) => {
 
       {/* CTA Footer */}
       <motion.div 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="bg-primary text-white py-16 text-center"
+        className="bg-primary text-white py-12 md:py-16 px-4 text-center relative overflow-hidden"
       >
-        <h2 className="text-2xl md:text-3xl font-bold mb-6">دعنا نحقق رؤيتك على أرض الواقع</h2>
-        <a 
-          href="#contact"
-          onClick={scrollToContact}
-          className="inline-flex items-center px-8 py-3 bg-accent text-white font-bold hover:bg-white hover:text-primary transition-all duration-300 rounded-sm cursor-pointer group"
-        >
-          اطلب عرض سعر
-          <ArrowLeft size={20} className="mr-2 transition-transform group-hover:-translate-x-1" />
-        </a>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+        <div className="relative z-10">
+          <h2 className="text-xl md:text-4xl font-bold mb-6 md:mb-8 leading-snug">دعنا نحقق رؤيتك على أرض الواقع</h2>
+          <a 
+            href="#contact"
+            onClick={scrollToContact}
+            className="inline-flex items-center px-8 py-3.5 bg-accent text-white font-bold text-base md:text-lg hover:bg-white hover:text-primary transition-all duration-300 rounded-sm shadow-lg hover:shadow-glow group"
+          >
+            اطلب عرض سعر
+            <ArrowLeft size={18} className="mr-2 transition-transform group-hover:-translate-x-1" />
+          </a>
+        </div>
       </motion.div>
     </div>
   );

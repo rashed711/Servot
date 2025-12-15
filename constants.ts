@@ -17,7 +17,7 @@ export const CONTACT_DETAILS: ContactInfo = {
   phone: '+201277795959',
   whatsapp: '+201277795959',
   email: 'info@servot.co',
-  address: 'القاهرة، جمهورية مصر العربية',
+  address: 'حدائق اكتوبر - الجيزة',
   mapUrl: 'https://maps.app.goo.gl/v59Scdksfb5t2rYa8',
   instagram: 'https://www.instagram.com/servotdesign',
   tiktok: 'https://www.tiktok.com/@servot.design'

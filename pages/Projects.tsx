@@ -23,48 +23,52 @@ const Projects: React.FC<ProjectsProps> = ({ id }) => {
   };
 
   return (
-    <div id={id} className="w-full bg-neutral">
+    <div id={id} className="w-full bg-white">
       {/* Header */}
-      <div className="bg-white py-24 border-b border-gray-200 text-center">
+      <div className="bg-neutral py-14 md:py-24 border-b border-gray-200 text-center">
         <motion.div
            initial={{ opacity: 0, y: -20 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ duration: 0.6 }}
-           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+           className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8"
         >
-          <h2 className="text-accent text-lg font-bold tracking-widest uppercase mb-2">أعمالنا</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            قمنا بتنفيذ العديد من المشاريع السكنية والتجارية والإدارية التي تميزت بالجمع بين الجمال والوظيفة، مع التركيز على التفاصيل الدقيقة التي تجعل كل مشروع فريدًا.
+          <h2 className="text-accent text-xs md:text-sm font-bold tracking-widest uppercase mb-2">أعمالنا</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-lg leading-loose">
+            لقطات مختارة تعكس جودة التنفيذ والاهتمام بأدق التفاصيل في مشاريعنا السابقة.
           </p>
         </motion.div>
       </div>
 
       {/* Grid */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 md:py-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <motion.div 
             variants={container}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           >
             {PROJECTS.map((project) => (
               <motion.div 
                 key={project.id} 
                 variants={item}
-                className="group bg-white rounded-sm overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                className="group relative bg-gray-100 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
               >
                 {/* Image Container */}
-                <div className="relative overflow-hidden h-96">
+                <div className="relative overflow-hidden h-[260px] md:h-[400px]">
                   <img 
                     src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    alt="Project" 
+                    loading="lazy"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
                   />
-                  {/* Subtle overlay removed on hover */}
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                  {/* Glassy overlay effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                     <p className="text-white font-bold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{project.title}</p>
+                     <p className="text-accent text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{project.category}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}

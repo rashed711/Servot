@@ -13,7 +13,8 @@ const App: React.FC = () => {
     <HashRouter>
       <div className="flex flex-col min-h-screen bg-neutral">
         <Navbar />
-        <main className="flex-grow pt-20">
+        {/* Removed pt-20 so Home section sits behind the fixed Navbar */}
+        <main className="flex-grow">
           <Home id="home" />
           <About id="about" />
           <Services id="services" />
