@@ -31,8 +31,6 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
     const element = document.querySelector(path);
     if (element) {
-      // Offset of 55px ensures content tucks slightly under the navbar (approx 57px-65px height)
-      // preventing any gaps showing the background of the previous section.
       const headerOffset = 55;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -53,8 +51,15 @@ const Navbar: React.FC = () => {
     }
   }, [isOpen]);
 
-  // Determine styles based on state
-  const useDarkContent = isScrolled || isOpen;
+  // Logic for the Toggle Button Color
+  // 1. If Menu is Open -> Always White (because menu bg is dark)
+  // 2. If Scrolled -> Dark (because navbar bg is white)
+  // 3. If Top & Closed -> White (because hero bg is dark)
+  const toggleButtonClass = isOpen 
+    ? 'text-white hover:bg-white/10 hover:text-accent'
+    : isScrolled 
+      ? 'text-primary hover:bg-gray-100' 
+      : 'text-white hover:bg-white/10';
 
   return (
     <>
@@ -115,9 +120,7 @@ const Navbar: React.FC = () => {
             <div className="md:hidden flex items-center z-50">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`focus:outline-none transition-colors duration-300 p-2 rounded-full
-                  ${useDarkContent ? 'text-primary hover:bg-gray-100' : 'text-white hover:bg-white/10'}
-                `}
+                className={`focus:outline-none transition-colors duration-300 p-2 rounded-full ${toggleButtonClass}`}
                 aria-label="Toggle menu"
               >
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -134,10 +137,15 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl md:hidden flex flex-col justify-center items-center h-[100dvh]"
+            transition={{ duration: 0.3 }}
+            // CHANGED: Removed /98 opacity and backdrop-blur. 
+            // Now using solid 'bg-primary' to ensure 100% opacity against any background.
+            className="fixed inset-0 z-40 bg-primary md:hidden flex flex-col justify-center items-center h-[100dvh]"
           >
-            <div className="flex flex-col space-y-6 text-center w-full px-8">
+            {/* Subtle Texture Overlay - Kept but ensures it doesn't affect readability */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
+
+            <div className="flex flex-col space-y-6 text-center w-full px-8 relative z-10">
               {NAV_ITEMS.map((item, idx) => (
                 <motion.a
                   key={item.path}
@@ -146,8 +154,8 @@ const Navbar: React.FC = () => {
                   transition={{ delay: 0.1 + idx * 0.05 }}
                   href={item.path}
                   onClick={(e) => handleNavClick(e, item.path)}
-                  className={`text-xl font-bold py-3 border-b border-gray-100 hover:border-accent/30 transition-all ${
-                    activeSection === item.path ? 'text-accent' : 'text-primary'
+                  className={`text-xl font-bold py-4 border-b border-white/10 hover:border-accent/50 transition-all ${
+                    activeSection === item.path ? 'text-accent' : 'text-gray-200 hover:text-white'
                   }`}
                 >
                   {item.label}
@@ -159,7 +167,7 @@ const Navbar: React.FC = () => {
                 transition={{ delay: 0.4 }}
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '#contact')}
-                className="w-full bg-accent text-white text-lg font-bold py-3.5 rounded-sm mt-6 shadow-lg active:scale-95 transition-transform"
+                className="w-full bg-accent text-white text-lg font-bold py-3.5 rounded-sm mt-8 shadow-lg active:scale-95 transition-transform hover:bg-yellow-500"
               >
                 تواصل معنا
               </motion.a>
