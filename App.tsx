@@ -11,10 +11,10 @@ import Contact from './pages/Contact';
 const App: React.FC = () => {
   return (
     <HashRouter>
-      <div className="flex flex-col min-h-screen bg-neutral">
+      <div className="flex flex-col min-h-screen bg-neutral w-full max-w-[100vw] overflow-x-hidden relative">
         <Navbar />
         {/* Removed pt-20 so Home section sits behind the fixed Navbar */}
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <Home id="home" />
           <About id="about" />
           <Services id="services" />

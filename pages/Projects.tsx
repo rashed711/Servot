@@ -28,7 +28,7 @@ const Projects: React.FC<ProjectsProps> = ({ id }) => {
   };
 
   return (
-    <div id={id} className="w-full bg-white">
+    <div id={id} className="w-full bg-white overflow-hidden">
       {/* Header */}
       <div className="bg-neutral py-14 md:py-24 border-b border-gray-200 text-center">
         <motion.div

@@ -9,7 +9,7 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ id }) => {
   return (
-    <div id={id} className="w-full bg-neutral">
+    <div id={id} className="w-full bg-neutral overflow-hidden">
       
       {/* Header */}
       <div className="bg-primary py-14 md:py-24 relative overflow-hidden">

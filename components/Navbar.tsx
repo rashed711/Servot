@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl md:hidden flex flex-col justify-center items-center"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl md:hidden flex flex-col justify-center items-center h-[100dvh]"
           >
             <div className="flex flex-col space-y-6 text-center w-full px-8">
               {NAV_ITEMS.map((item, idx) => (
