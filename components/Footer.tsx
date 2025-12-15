@@ -43,11 +43,16 @@ const Footer: React.FC = () => {
           
           {/* Brand Column */}
           <div className="space-y-6 flex flex-col items-center md:items-start text-center md:text-start">
-            <img 
-              src={LOGO_URL} 
-              alt={COMPANY_NAME} 
-              className="h-14 md:h-20 w-auto object-contain mb-2 brightness-0 invert opacity-90 hover:opacity-100 transition-opacity" 
-            />
+            {/* Logo & Name Section */}
+            <div className="flex flex-col items-center md:items-start">
+              <img 
+                src={LOGO_URL} 
+                alt={COMPANY_NAME} 
+                className="h-16 md:h-24 w-auto object-contain mb-3 hover:scale-105 transition-transform duration-300" 
+              />
+              <h2 className="text-2xl font-bold text-white tracking-wide">{COMPANY_NAME}</h2>
+            </div>
+
             <p className="text-gray-400 text-sm leading-loose max-w-xs mx-auto md:mx-0 font-medium">
               شريككم الموثوق في تقديم حلول معمارية وتشطيبات متكاملة. نلتزم بأعلى معايير الجودة لتنفيذ مشاريع تليق بطموحاتكم.
             </p>

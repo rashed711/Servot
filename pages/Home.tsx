@@ -61,7 +61,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
             initial={{ scale: 1.15 }}
             animate={{ scale: 1 }}
             transition={{ duration: 2.5, ease: "easeOut" }}
-            src="https://i.pinimg.com/1200x/6f/76/ad/6f76adf3395e2e94eb92fc7e6c6fad14.jpg" 
+            src="https://i.postimg.cc/KcfhfcY8/6f76adf3395e2e94eb92fc7e6c6fad14.webp" 
             alt="Interior Architecture" 
             className="w-full h-full object-cover"
           />
