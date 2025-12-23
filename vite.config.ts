@@ -9,8 +9,13 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    // Removed minify: 'terser' to use the default 'esbuild' which is faster and built-in
-    minify: 'esbuild',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
